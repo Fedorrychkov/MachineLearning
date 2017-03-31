@@ -65,6 +65,7 @@ def calc_test_last(step):
     for i in range (step): #возможно степ не надо, я не понял.
         predict_y = w.dot(F.transpose())
     print ("Minimal Error index:  ", step)
+
     #print (F)
 
     #print (w)
@@ -80,8 +81,13 @@ def main():
             Err[i] = Err[i] / 2
 
     min_step = np.argmin(Err)
-    print("Minimal Error", np.min(Err))
+    print("Minimal Error from Valid", np.min(Err))
     predict_y = calc_test_last(min_step)
+    for j in range(w.size):
+        Err[i] += (test_t[j] - predict_y[j]) ** 2
+        Err[i] = Err[i] / 2
+    print ("Minimal Error from Test: ", np.min(Err))
+
     plt.figure('Предсказываем график слева, график ошибки справа')
     plt.subplot(1, 2, 1)
     #plt.plot(train_x, train_t, '.g')
